@@ -1,3 +1,21 @@
+
+DROP TABLE IF EXISTS Department_History;
+DROP TABLE IF EXISTS Inventory_Shift;
+DROP TABLE IF EXISTS Training;
+DROP TABLE IF EXISTS Certificates;
+DROP TABLE IF EXISTS Type_Skill;
+DROP TABLE IF EXISTS Warning;
+DROP TABLE IF EXISTS Uniform;
+DROP TABLE IF EXISTS TimeOff;
+DROP TABLE IF EXISTS Shift;
+DROP TABLE IF EXISTS Schedule;
+DROP TABLE IF EXISTS Employee;
+DROP TABLE IF EXISTS Inventory;
+DROP TABLE IF EXISTS Section;
+DROP TABLE IF EXISTS Skill;
+DROP TABLE IF EXISTS Department;
+DROP TABLE IF EXISTS Employee_Type;
+
 CREATE TABLE Employee_Type (
     Type_ID INT PRIMARY KEY,
     Type_Title VARCHAR(50) NOT NULL,
@@ -49,53 +67,61 @@ CREATE TABLE Employee (
   FOREIGN KEY (EMP_TYPE_ID) REFERENCES Employee_Type(Type_ID)
 );
 
+CREATE TABLE Schedule (
+  Schedule_ID INT PRIMARY KEY,
+  Schedule_From DATE,
+  Schedule_To DATE,
+  Made_By INT
+  FOREIGN KEY (Made_By) REFERENCES Employee(EMP_ID),
+
+);
+
 CREATE TABLE Shift (
-  PK INT PRIMARY KEY,
-  Shift_ID INT,
+  Shift_ID INT PRIMARY KEY,
   Shift_Type VARCHAR(50),
   Shift_Start TIME,
   Shift_End TIME,
   Shift_Date DATE,
-  FK_EMP_Working INT,
-  FK_Schedule_ID INT,
-  FK_Section_ID INT
+  EMP_Working INT,
+  Schedule_ID INT,
+  Section_ID INT,
+  FOREIGN KEY (EMP_Working) REFERENCES Employee(EMP_ID),
+  FOREIGN KEY (Schedule_ID) REFERENCES Schedule(Schedule_ID),
+  FOREIGN KEY (Section_ID) REFERENCES Section(Section_ID)
 );
 
-CREATE TABLE Schedule (
-  PK INT PRIMARY KEY,
-  Schedule_ID INT,
-  Schedule_From DATE,
-  Schedule_To DATE,
-  FK_Made_By INT
-);
+
 
 CREATE TABLE TimeOff (
-  PK INT PRIMARY KEY,
-  Time_ID INT,
-  FK_EMP_ID INT,
+  Time_ID INT PRIMARY KEY,
+  EMP_ID INT,
   TimeOff_Type VARCHAR(50),
   Time_Approval_Status VARCHAR(50),
   TimeOff_Start_Date DATE,
   TimeOff_End_Date DATE
-);
-
-CREATE TABLE Inventory_Shift (
-  PK INT PRIMARY KEY,
-  FK_Inventory_ID INT,
-  FK_Shift_ID INT,
-  Inventory_Quantity INT,
-  Inventory_Status VARCHAR(50)
+  FOREIGN KEY (EMP_ID) REFERENCES Employee(EMP_ID),
 );
 
 CREATE TABLE Inventory (
-  PK INT PRIMARY KEY,
-  Inv_ID INT,
+  Inv_ID INT PRIMARY KEY,
   Inv_Name VARCHAR(255),
   Inv_Price DECIMAL(10, 2),
   Inv_Quantity INT,
   Inv_Description VARCHAR(255),
   Inventory_Type VARCHAR(50)
 );
+
+CREATE TABLE Inventory_Shift (
+  Inventory_ID INT,
+  Shift_ID INT,
+  Inventory_Quantity INT,
+  Inventory_Status VARCHAR(50),
+  PRIMARY KEY (Shift_ID, Inventory_ID),
+  FOREIGN KEY (Inventory_ID) REFERENCES Inventory(Inv_ID),
+  FOREIGN KEY (Shift_ID) REFERENCES Shift(Shift_ID)
+);
+
+
 
 
  CREATE TABLE Department_History (
@@ -151,9 +177,9 @@ CREATE TABLE Certificates (
     Issuing_Auth VARCHAR(50) NOT NULL,
     Skill_ID INT NOT NULL,
     Type_ID INT NOT NULL,
-    Cert_Issued_To VARCHAR(50) NOT NULL,
-    FOREIGN KEY (Skill_ID, Type_ID) REFERENCES Type_Skill (Skill_ID, Skill_ID),
-    FOREIGN KEY (Cert_Issued_To) REFERENCES Employee (EMP_Name)
+    Cert_Issued_To INT NOT NULL,
+    FOREIGN KEY (Skill_ID, Type_ID) REFERENCES Type_Skill (Type_ID, Skill_ID),
+    FOREIGN KEY (Cert_Issued_To) REFERENCES Employee (EMP_ID)
 );
 
 
@@ -162,12 +188,12 @@ CREATE TABLE Certificates (
 
 CREATE TABLE Training (
     Training_ID INT PRIMARY KEY,
-    EMP_Trained VARCHAR(50) NOT NULL,
-    EMP_Trainer VARCHAR(50) NOT NULL,
+    EMP_Trained INT NOT NULL,
+    EMP_Trainer INT NOT NULL,
     Training_Date DATE NOT NULL,
     Traning_Type VARCHAR(50) NOT NULL,
     Cert_ID INT NOT NULL,
-    FOREIGN KEY (EMP_Trained) REFERENCES Employee (EMP_Name),
-    FOREIGN KEY (EMP_Trainer) REFERENCES Employee (EMP_Name),
+    FOREIGN KEY (EMP_Trained) REFERENCES Employee (EMP_ID),
+    FOREIGN KEY (EMP_Trainer) REFERENCES Employee (EMP_ID),
     FOREIGN KEY (Cert_ID) REFERENCES Certificates (Cert_ID)
 );
