@@ -26,8 +26,8 @@ CREATE TABLE Employee_Type (
 CREATE TABLE Department (
     Dept_ID INT PRIMARY KEY,
     Dept_Name VARCHAR(50) NOT NULL,
-    Dept_Manager VARCHAR(50) NOT NULL,
-    Dept_Ph_Number VARCHAR(20) NOT NULL
+    Dept_Manager INT,
+    Dept_Ph_Number VARCHAR(20) NOT NULL,
 );
 
 CREATE TABLE Skill (
@@ -129,7 +129,7 @@ CREATE TABLE Inventory_Shift (
     Dept_ID INT NOT NULL,
     Type_ID INT NOT NULL,
     Start_Date DATE NOT NULL,
-    End_Date DATE NOT NULL,
+    End_Date DATE NULL,
     PRIMARY KEY (EMP_ID, Dept_ID, Type_ID, Start_Date),
     FOREIGN KEY (EMP_ID) REFERENCES Employee (EMP_ID),
     FOREIGN KEY (Dept_ID) REFERENCES Department (Dept_ID),
