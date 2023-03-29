@@ -1,6 +1,32 @@
+CREATE TABLE Employee_Type (
+    Type_ID INT PRIMARY KEY,
+    Type_Title VARCHAR(50) NOT NULL,
+    Type_Description VARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE Department (
+    Dept_ID INT PRIMARY KEY,
+    Dept_Name VARCHAR(50) NOT NULL,
+    Dept_Manager VARCHAR(50) NOT NULL,
+    Dept_Ph_Number VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE Skill (
+    Skill_ID INT PRIMARY KEY,
+    Skill_Des VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Section (
+    Section_ID INT PRIMARY KEY,
+    Section_Description VARCHAR(100) NOT NULL
+);
+
+
+
+
 CREATE TABLE Employee (
-  PK INT PRIMARY KEY,
-  EMP_ID INT,
+  EMP_ID INT NOT NULL PRIMARY KEY,
   EMP_Name VARCHAR(255),
   EMP_DOB DATE,
   EMP_Email VARCHAR(255),
@@ -15,10 +41,12 @@ CREATE TABLE Employee (
   EMP_Hire_Date DATE,
   EMP_Pay_Rate DECIMAL(10, 2),
   EMP_Dismiss_Date DATE,
-  FK_DEPT_ID INT,
-  FK_EMP_TYPE_ID INT,
+  DEPT_ID INT,
+  EMP_TYPE_ID INT,
   EMP_Vacation_TimeOff DECIMAL(10, 2),
-  EMP_Sick_TimeOff DECIMAL(10, 2)
+  EMP_Sick_TimeOff DECIMAL(10, 2),
+  FOREIGN KEY (DEPT_ID) REFERENCES Department(Dept_ID),
+  FOREIGN KEY (EMP_TYPE_ID) REFERENCES Employee_Type(Type_ID)
 );
 
 CREATE TABLE Shift (
@@ -82,43 +110,38 @@ CREATE TABLE Inventory (
     FOREIGN KEY (Type_ID) REFERENCES Employee_Type (Type_ID)
 );
 
-CREATE TABLE Department (
-    Dept_ID INT PRIMARY KEY,
-    Dept_Name VARCHAR(50) NOT NULL,
-    Dept_Manager VARCHAR(50) NOT NULL,
-    Dept_Ph_Number VARCHAR(20) NOT NULL
-);
 
-CREATE TABLE Employee_Type (
-    Type_ID INT PRIMARY KEY,
-    Type_Title VARCHAR(50) NOT NULL,
-    Type_Description VARCHAR(100) NOT NULL
-);
+
 
 CREATE TABLE Uniform (
     Uni_ID INT PRIMARY KEY,
-    Uni_Issued_To VARCHAR(50) NOT NULL,
+    Uni_Issued_To INT NOT NULL,
     Uniform_Status VARCHAR(20) NOT NULL,
     Uniform_Size VARCHAR(20) NOT NULL,
     Issued_Date DATE NOT NULL,
-    FOREIGN KEY (Uni_Issued_To) REFERENCES Employee (EMP_Name)
+    FOREIGN KEY (Uni_Issued_To) REFERENCES Employee (EMP_ID)
 );
 
 CREATE TABLE Warning (
     Warn_ID INT PRIMARY KEY,
-    Warn_Issued_To VARCHAR(50) NOT NULL,
-    Warn_Issued_By VARCHAR(50) NOT NULL,
+    Warn_Issued_To INT NOT NULL,
+    Warn_Issued_By INT NOT NULL,
     Warn_Issue_Date DATE NOT NULL,
     Warn_Level INT NOT NULL,
     Warn_Details VARCHAR(100) NOT NULL,
-    FOREIGN KEY (Warn_Issued_To) REFERENCES Employee (EMP_Name),
-    FOREIGN KEY (Warn_Issued_By) REFERENCES Employee (EMP_Name)
+    FOREIGN KEY (Warn_Issued_To) REFERENCES Employee (EMP_ID),
+    FOREIGN KEY (Warn_Issued_By) REFERENCES Employee (EMP_ID)
 );
 
-CREATE TABLE Section (
-    Section_ID INT PRIMARY KEY,
-    Section_Description VARCHAR(100) NOT NULL
+CREATE TABLE Type_Skill (
+    Type_ID INT NOT NULL,
+    Skill_ID INT NOT NULL,
+    PRIMARY KEY (Type_ID, Skill_ID),
+    FOREIGN KEY (Type_ID) REFERENCES Employee_Type (Type_ID),
+    FOREIGN KEY (Skill_ID) REFERENCES Skill (Skill_ID)
 );
+
+
 
 CREATE TABLE Certificates (
     Cert_ID INT PRIMARY KEY,
@@ -129,23 +152,13 @@ CREATE TABLE Certificates (
     Skill_ID INT NOT NULL,
     Type_ID INT NOT NULL,
     Cert_Issued_To VARCHAR(50) NOT NULL,
-    FOREIGN KEY (Skill_ID) REFERENCES Skill (Skill_ID),
-    FOREIGN KEY (Type_ID) REFERENCES Type_Skill (Type_ID),
+    FOREIGN KEY (Skill_ID, Type_ID) REFERENCES Type_Skill (Skill_ID, Skill_ID),
     FOREIGN KEY (Cert_Issued_To) REFERENCES Employee (EMP_Name)
 );
 
-CREATE TABLE Skill (
-    Skill_ID INT PRIMARY KEY,
-    Skill_Des VARCHAR(100) NOT NULL
-);
 
-CREATE TABLE Type_Skill (
-    Type_ID INT NOT NULL,
-    Skill_ID INT NOT NULL,
-    PRIMARY KEY (Type_ID, Skill_ID),
-    FOREIGN KEY (Type_ID) REFERENCES Employee_Type (Type_ID),
-    FOREIGN KEY (Skill_ID) REFERENCES Skill (Skill_ID)
-);
+
+
 
 CREATE TABLE Training (
     Training_ID INT PRIMARY KEY,
