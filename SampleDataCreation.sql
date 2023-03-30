@@ -37,7 +37,13 @@ INSERT INTO Employee (EMP_ID, EMP_Name, EMP_DOB, EMP_Email, EMP_Phone_Number, EM
 (1, 'John Smith', '1980-01-01', 'john.smith@example.com', '+1-111-111-1111', '123 Main St', 'Las Vegas', 'USA', 'Main St', '123', '12345', 'Male', '2020-01-01', 20.00, NULL, 1, 1, 10.00, 5.00),
 (2, 'Jane Doe', '1990-01-01', 'jane.doe@example.com', '+1-222-222-2222', '456 Elm St', 'Las Vegas', 'USA', 'Elm St', '456', '12345', 'Female', '2020-02-01', 15.00, NULL, 2, 2, 5.00, 2.50),
 (3, 'Mike Johnson', '1985-01-01', 'mike.johnson@example.com', '+1-333-333-3333', '789 Oak St', 'Las Vegas', 'USA', 'Oak St', '789', '12345', 'Male', '2020-03-01', 12.00, NULL, 3, 2, 5.00, 2.50),
-(4, 'Mangat Toor', '2001-01-01', 'mangat.toor@example.com', '+1-999-333-3333', '7839 Oak St', 'Las Vegas', 'USA', 'Oak St', '789', '12345', 'Male', '2020-03-01', 12.00, NULL, 3, 2, 5.00, 2.50);
+(4, 'Mangat Toor', '2001-01-01', 'mangat.toor@example.com', '+1-999-333-3333', '7839 Oak St', 'Las Vegas', 'USA', 'Oak St', '789', '12345', 'Male', '2020-03-01', 12.00, NULL, 3, 2, 5.00, 2.50),
+(5, 'Sarah Lee', '1989-06-12', 'sarah.lee@example.com', '+1-444-444-4444', '123 Maple St', 'New York', 'USA', 'Maple St', '123', '10001', 'Female', '2021-01-01', 25.00, NULL, 2, 3, 10.00, 7.00),
+(6, 'Adam Jones', '1995-09-22', 'adam.jones@example.com', '+1-555-555-5555', '456 Oak St', 'New York', 'USA', 'Oak St', '456', '10001', 'Male', '2021-02-01', 18.00, NULL, 1, 4, 5.00, 2.50),
+(7, 'Jessica Smith', '1992-04-10', 'jessica.smith@example.com', '+1-666-666-6666', '789 Elm St', 'Los Angeles', 'USA', 'Elm St', '789', '90001', 'Female', '2021-03-01', 22.00, NULL, 4, 2, 7.00, 3.50),
+(8, 'Michael Brown', '1987-11-15', 'michael.brown@example.com', '+1-777-777-7777', '123 Oak St', 'Los Angeles', 'USA', 'Oak St', '123', '90001', 'Male', '2021-04-01', 20.00, NULL, 3, 5, 6.00, 3.00),
+(9, 'Emily Wilson', '1999-02-28', 'emily.wilson@example.com', '+1-888-888-8888', '456 Maple St', 'Chicago', 'USA', 'Maple St', '456', '60007', 'Female', '2021-05-01', 16.00, NULL, 1, 6, 4.00, 2.00),
+(10, 'Robert Garcia', '1982-12-07', 'robert.garcia@example.com', '+1-999-999-9999', '789 Elm St', 'Chicago', 'USA', 'Elm St', '789', '60007', 'Male', '2021-06-01', 24.00, NULL, 2, 7, 8.00, 4.00);
 
 
 
@@ -72,7 +78,8 @@ INSERT INTO Inventory (Inv_ID, Inv_Name, Inv_Price, Inv_Quantity, Inv_Descriptio
 (1, 'Poker Chips', 1.99, 500, '500-count set of poker chips', 'Game Supplies'),
 (2, 'Blackjack Table', 499.99, 1, 'Folding blackjack table', 'Furniture'),
 (3, 'Bar Stool', 49.99, 10, 'Adjustable bar stool', 'Furniture'),
-(4, 'Cocktail Glass', 2.99, 100, '12 oz cocktail glass', 'Glassware');
+(4, 'Cocktail Glass', 2.99, 100, '12 oz cocktail glass', 'Glassware'),
+(5, 'Uniforms',20, 40, 'Uniforms for employees', 'Clothes');
 
 INSERT INTO Inventory_Shift (Inventory_ID, Shift_ID, Inventory_Quantity, Inventory_Status) VALUES
 (1, 1, 100, 'In Use'),
@@ -101,10 +108,10 @@ INSERT INTO Uniform (Uni_ID, Uni_Issued_To, Uniform_Status, Uniform_Size, Issued
 (4, 4, 'Issued', 'XL', '2023-04-01');
 
 INSERT INTO Warning (Warn_ID, Warn_Issued_To, Warn_Issued_By, Warn_Issue_Date, Warn_Level, Warn_Details) VALUES
-(1, 1, 2, '2023-01-15', 1, 'Late for shift'),
-(2, 2, 3, '2023-02-15', 2, 'Customer complaint'),
+(1, 1, 4, '2023-01-15', 1, 'Late for shift'),
+(2, 2, 4, '2023-02-15', 1, 'Customer complaint'),
 (3, 3, 4, '2023-03-15', 1, 'Improper uniform'),
-(4, 4, 1, '2023-04-15', 2, 'Absent without notice');
+(4, 3, 4, '2023-04-15', 2, 'Absent without notice');
 
 INSERT INTO Type_Skill (Type_ID, Skill_ID) VALUES
 (1, 2),
