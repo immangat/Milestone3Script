@@ -1,4 +1,3 @@
-
 -- Create a new database called 'DatabaseName'
 -- Connect to the 'master' database to run this snippet
 USE master
@@ -10,6 +9,7 @@ CREATE DATABASE Casino;
 GO
 USE Casino;
 Go
+
 
 --Redudant, we already drop database 'DatabaseName'
 -- DROP TABLE IF EXISTS Department_History;
@@ -29,11 +29,14 @@ Go
 -- DROP TABLE IF EXISTS Department;
 -- DROP TABLE IF EXISTS Employee_Type;
 
+
 CREATE TABLE Employee_Type (
     Type_ID INT PRIMARY KEY,
     Type_Title VARCHAR(50) NOT NULL,
     Type_Description VARCHAR(100)
 );
+
+
 
 
 CREATE TABLE Department (
@@ -45,17 +48,22 @@ CREATE TABLE Department (
 
 
 
+
+
+
 CREATE TABLE Section (
     Section_ID INT PRIMARY KEY,
     Section_Description VARCHAR(100)
 );
 
+
 CREATE TABLE Skill (
     Skill_ID INT PRIMARY KEY,
     Skill_Des VARCHAR(100) NOT NULL,
-	Section_ID INT,
-	FOREIGN KEY (Section_ID) REFERENCES Section(Section_ID)
+        Section_ID INT,
+        FOREIGN KEY (Section_ID) REFERENCES Section(Section_ID)
 );
+
 
 CREATE TABLE Employee (
   EMP_ID INT NOT NULL PRIMARY KEY,
@@ -81,10 +89,12 @@ CREATE TABLE Employee (
   FOREIGN KEY (EMP_TYPE_ID) REFERENCES Employee_Type(Type_ID)
 );
 
+
 ALTER TABLE Department
 ADD CONSTRAINT Dept_Manager
 FOREIGN KEY (Dept_Manager)
 REFERENCES Employee (EMP_ID);
+
 
 CREATE TABLE Schedule (
   Schedule_ID INT PRIMARY KEY,
@@ -93,6 +103,7 @@ CREATE TABLE Schedule (
   Made_By INT NOT NULL,
   FOREIGN KEY (Made_By) REFERENCES Employee(EMP_ID)
 );
+
 
 CREATE TABLE Shift (
   Shift_ID INT PRIMARY KEY,
@@ -111,6 +122,9 @@ CREATE TABLE Shift (
 
 
 
+
+
+
 CREATE TABLE TimeOff (
   Time_ID INT PRIMARY KEY,
   EMP_ID INT NOT NULL,
@@ -121,6 +135,7 @@ CREATE TABLE TimeOff (
   FOREIGN KEY (EMP_ID) REFERENCES Employee(EMP_ID),
 );
 
+
 CREATE TABLE Inventory (
   Inv_ID INT PRIMARY KEY,
   Inv_Name VARCHAR(255) NOT NULL,
@@ -129,6 +144,7 @@ CREATE TABLE Inventory (
   Inv_Description VARCHAR(255),
   Inventory_Type VARCHAR(50)
 );
+
 
 CREATE TABLE Inventory_Shift (
   Inventory_ID INT NOT NULL,
@@ -139,6 +155,10 @@ CREATE TABLE Inventory_Shift (
   FOREIGN KEY (Inventory_ID) REFERENCES Inventory(Inv_ID),
   FOREIGN KEY (Shift_ID) REFERENCES Shift(Shift_ID)
 );
+
+
+
+
 
 
 
@@ -158,6 +178,10 @@ CREATE TABLE Inventory_Shift (
 
 
 
+
+
+
+
 CREATE TABLE Uniform (
     Uni_ID INT PRIMARY KEY,
     Uni_Issued_To INT NOT NULL,
@@ -166,6 +190,7 @@ CREATE TABLE Uniform (
     Issued_Date DATE NOT NULL,
     FOREIGN KEY (Uni_Issued_To) REFERENCES Employee (EMP_ID)
 );
+
 
 CREATE TABLE Warning (
     Warn_ID INT PRIMARY KEY,
@@ -178,6 +203,7 @@ CREATE TABLE Warning (
     FOREIGN KEY (Warn_Issued_By) REFERENCES Employee (EMP_ID)
 );
 
+
 CREATE TABLE Type_Skill (
     Type_ID INT NOT NULL,
     Skill_ID INT NOT NULL,
@@ -188,15 +214,23 @@ CREATE TABLE Type_Skill (
 
 
 
+
+
+
 CREATE TABLE Certificates (
     Cert_ID INT PRIMARY KEY,
     Cert_Des VARCHAR(50) NOT NULL,
     Cert_Date_Issued DATE NOT NULL,
     Cert_Exp_Date DATE NOT NULL,
     Issuing_Auth VARCHAR(50) NOT NULL,
-	Cert_Issued_To INT NOT NULL,
+        Cert_Issued_To INT NOT NULL,
     FOREIGN KEY (Cert_Issued_To) REFERENCES Employee (EMP_ID)
 );
+
+
+
+
+
 
 
 
@@ -207,16 +241,18 @@ CREATE TABLE Skill_Training (
     EMP_Trained INT NOT NULL,
     EMP_Trainer INT NOT NULL,
     Training_Date DATE NOT NULL,
-	Training_Exp DATE NOT NULL,
-	Skill_ID INT NOT NULL,
+        Training_Exp DATE NOT NULL,
+        Skill_ID INT NOT NULL,
     Type_ID INT NOT NULL,
-	Need_Updating BIT NOT NULL,
+        Need_Updating BIT NOT NULL,
     FOREIGN KEY (EMP_Trained) REFERENCES Employee (EMP_ID),
     FOREIGN KEY (EMP_Trainer) REFERENCES Employee (EMP_ID),
    FOREIGN KEY (Skill_ID, Type_ID) REFERENCES Type_Skill (Type_ID, Skill_ID)
 );
 
+
 Use Casino;
+
 
 INSERT INTO Employee_Type (Type_ID, Type_Title, Type_Description) VALUES
 (1, 'Manager', 'Manages all departments'),
@@ -228,11 +264,15 @@ INSERT INTO Employee_Type (Type_ID, Type_Title, Type_Description) VALUES
 (7, 'IT Support', 'Provides technical support to the casino'),
 (8, 'Slot Attendant', 'Attendants to the Slot Machines');
 
+
 INSERT INTO Department (Dept_ID, Dept_Name, Dept_Manager, Dept_Ph_Number) VALUES
 (1, 'Operations', NULL, '+1-123-456-7890'),
 (2, 'Security', NULL, '+1-234-567-8901'),
 (3, 'Food and Beverage', NULL, '+1-345-678-9012'),
 (4, 'Cleaning', NULL, '+1-456-789-0123');
+
+
+
 
 
 
@@ -251,12 +291,14 @@ INSERT INTO Section (Section_ID, Section_Description) VALUES
 (12, 'East'),
 (13, 'High Value');
 
+
 INSERT INTO Skill (Skill_ID, Skill_Des, Section_ID) VALUES
 (1, 'Shuffling Cards', 1),
 (2, 'Food Safety', 6),
 (3, 'Problem-solving', 3),
 (4, 'Customer service', 8),
 (5, 'Time management', 5);
+
 
 INSERT INTO Employee (EMP_ID, EMP_Name, EMP_DOB, EMP_Email, EMP_Phone_Number, EMP_Address, EMP_City, EMP_Country, EMP_Street, EMP_House_Number, EMP_Postal_Code, EMP_Gender, EMP_Hire_Date, EMP_Pay_Rate, EMP_Dismiss_Date, DEPT_ID, EMP_TYPE_ID, EMP_Vacation_TimeOff, EMP_Sick_TimeOff) VALUES
 (1, 'John Smith', '1980-01-01', 'john.smith@example.com', '+1-111-111-1111', '123 Main St', 'Las Vegas', 'USA', 'Main St', '123', '12345', 'Male', '2020-01-01', 20.00, NULL, 1, 1, 10.00, 5.00),
@@ -270,9 +312,11 @@ INSERT INTO Employee (EMP_ID, EMP_Name, EMP_DOB, EMP_Email, EMP_Phone_Number, EM
 (9, 'Emily Wilson', '1999-02-28', 'emily.wilson@example.com', '+1-888-888-8888', '456 Maple St', 'Chicago', 'USA', 'Maple St', '456', '60007', 'Female', '2021-05-01', 16.00, NULL, 1, 6, 4.00, 2.00),
 (10, 'Robert Garcia', '1982-12-07', 'robert.garcia@example.com', '+1-999-999-9999', '789 Elm St', 'Chicago', 'USA', 'Elm St', '789', '60007', 'Male', '2021-06-01', 24.00, NULL, 2, 8, 8.00, 4.00);
 
+
 UPDATE Department
 SET Dept_Manager = 1
 WHERE Dept_ID = 1;
+
 
 INSERT INTO Schedule (Schedule_ID, Schedule_From, Schedule_To, Made_By) VALUES
 (1, '2023-04-01', '2023-04-07', 1),
@@ -281,6 +325,7 @@ INSERT INTO Schedule (Schedule_ID, Schedule_From, Schedule_To, Made_By) VALUES
 (4, '2023-04-08', '2023-04-14', 2),
 (5, '2023-04-01', '2023-04-07', 3),
 (6, '2023-04-08', '2023-04-14', 3);
+
 
 INSERT INTO Shift (Shift_ID, Shift_Start, Shift_End, EMP_Working, EMP_Covering, Is_Breaker_Shift, Schedule_ID, Section_ID) VALUES
 (1, '2023-04-01 09:00:00', '2023-04-01 13:00:00', 1, NULL, 0, 1, 1),
@@ -300,10 +345,22 @@ INSERT INTO Shift (Shift_ID, Shift_Start, Shift_End, EMP_Working, EMP_Covering, 
 (15, '2023-04-01 6:00:00', '2023-04-02 14:00:00', 10, NULL, 0, 1, 1);
 
 
+
+
 INSERT INTO TimeOff (Time_ID, EMP_ID, TimeOff_Type, Time_Approval_Status, TimeOff_Start_Date, TimeOff_End_Date) VALUES
 (1, 1, 'Vacation', 'Approved', '2023-04-01', '2023-04-03'),
 (2, 2, 'Sick', 'Approved', '2023-04-02', '2023-04-02'),
-(3, 3, 'Vacation', 'Pending', '2023-04-05', '2023-04-06');
+(3, 3, 'Vacation', 'Pending', '2023-04-05', '2023-04-06'),
+(4, 4, 'Vacation', 'Denied', '2023-05-01', '2023-05-29'),
+(5, 5, 'Vacation', 'Pending', '2023-12-15', '2023-12-27'),
+(6, 6, 'Vacation', 'Approved', '2023-07-12', '2023-07-15'),
+(7, 7, 'Vacation', 'Pending', '2023-11-09', '2023-11-15'),
+(8, 8, 'Vacation', 'Denied', '2023-04-05', '2023-05-06'),
+(9, 9, 'Sick', 'Denied', '2023-04-02', '2023-04-10'),
+(10, 10, 'Vacation', 'Denied', '2023-05-01', '2023-06-01');
+
+
+
 
 INSERT INTO Inventory (Inv_ID, Inv_Name, Inv_Price, Inv_Quantity, Inv_Description, Inventory_Type) VALUES
 (1, 'Poker Chips', 1.99, 500, '500-count set of poker chips', 'Game Supplies'),
@@ -313,6 +370,7 @@ INSERT INTO Inventory (Inv_ID, Inv_Name, Inv_Price, Inv_Quantity, Inv_Descriptio
 (5, 'Uniforms-S',20, 40, 'Size S Uniforms for employees.', 'Clothes'),
 (6, 'Uniforms-M',20, 40, 'Size M Uniforms for employees', 'Clothes'),
 (7, 'Uniforms-L',20, 40, 'Size L Uniforms for employees', 'Clothes');
+
 
 INSERT INTO Inventory_Shift (Inventory_ID, Shift_ID, Inventory_Quantity, Inventory_Status) VALUES
 (1, 1, 100, 'In Use'),
@@ -324,6 +382,7 @@ INSERT INTO Inventory_Shift (Inventory_ID, Shift_ID, Inventory_Quantity, Invento
 (3, 6, 2, 'In Use'),
 (4, 8, 5, 'In Use');
 
+
 INSERT INTO Department_History (EMP_ID, Dept_ID, Type_ID, Start_Date, End_Date) VALUES
 (1, 1, 1, '2020-01-01', NULL),
 (2, 2, 2, '2020-02-01', NULL),
@@ -334,17 +393,31 @@ INSERT INTO Department_History (EMP_ID, Dept_ID, Type_ID, Start_Date, End_Date) 
 (3, 1, 2, '2023-03-01', NULL),
 (4, 2, 2, '2023-04-01', NULL);
 
+
 INSERT INTO Uniform (Uni_ID, Uni_Issued_To, Uniform_Status, Uniform_Size, Issued_Date) VALUES
 (1, 1, 'Issued', 'M', '2023-01-01'),
 (2, 2, 'Issued', 'S', '2023-02-01'),
 (3, 3, 'Issued', 'L', '2023-03-01'),
-(4, 4, 'Issued', 'XL', '2023-04-01');
+(4, 4, 'Issued', 'XL', '2023-04-01'),
+(5, 5, 'Issued', 'XL', '2023-02-01'),
+(6, 6, 'Issued', 'L', '2023-03-01'),
+(7, 7, 'Issued', 'M', '2023-01-01'),
+(8, 8, 'Issued', 'S', '2023-01-01'),
+(9, 9, 'Issued', 'S', '2023-01-09'),
+(10, 10, 'Issued', 'L', '2023-03-25');
+
 
 INSERT INTO Warning (Warn_ID, Warn_Issued_To, Warn_Issued_By, Warn_Issue_Date, Warn_Level, Warn_Details) VALUES
 (1, 1, 4, '2023-01-15', 1, 'Late for shift'),
 (2, 2, 4, '2023-02-15', 1, 'Customer complaint'),
 (3, 3, 4, '2023-03-15', 1, 'Improper uniform'),
-(4, 3, 4, '2023-04-15', 2, 'Absent without notice');
+(4, 3, 4, '2023-04-15', 2, 'Absent without notice'),
+(5, 5, 4, '2023-04-15', 2, 'Absent without notice'),
+(6, 6, 4, '2023-04-15', 2, 'Left work early'),
+(7, 7, 4, '2023-04-15', 2, 'Missing money from table'),
+(8, 8, 4, '2023-04-15', 2, 'Hungover at work'),
+(9, 9, 4, '2023-04-15', 2, 'Did''nt return a customer''s wallet');
+
 
 INSERT INTO Type_Skill (Type_ID, Skill_ID) VALUES
 (1, 2),
@@ -358,17 +431,28 @@ INSERT INTO Type_Skill (Type_ID, Skill_ID) VALUES
 (7, 1);
 
 
+
+
 INSERT INTO Certificates (Cert_ID, Cert_Des, Cert_Date_Issued, Cert_Exp_Date, Issuing_Auth, Cert_Issued_To) VALUES
 (1, 'CPR Certification', '2020-01-01', '2023-04-28', 'Red Cross', 1),
 (2, 'First Aid Certification', '2020-02-01', '2025-02-01', 'Red Cross', 2),
 (3, 'Card Dealing Certification', '2020-03-01', '2025-03-01', 'Casino Association', 3),
 (4, 'Blackjack Strategy Certification', '2020-04-01', '2025-04-01', 'Casino Association', 4);
 
+
+
+
 INSERT INTO Skill_Training (Training_ID, EMP_Trained, EMP_Trainer, Training_Date,Training_Exp, Skill_ID, Type_ID, Need_Updating) VALUES
 (1, 1, 2, '2023-01-10','2023-01-25', 2, 1, 0),
 (2, 2, 3, '2023-02-10', '2024-02-10',1, 2, 0),
 (3, 3, 4, '2023-03-10', '2024-04-10',4, 3, 0),
-(4, 4, 1, '2023-04-10', '2024-04-10',3, 4, 1);
+(4, 4, 1, '2023-04-10', '2024-04-10',3, 4, 1),
+(5, 5, 1, '2023-05-10', '2024-05-10',3, 4, 1),
+(6, 6, 2, '2023-06-10', '2024-06-10',3, 4, 1),
+(7, 7, 4, '2023-07-10', '2024-07-10',3, 4, 1),
+(8, 8, 3, '2023-08-10', '2024-08-10',3, 4, 1),
+(9, 9, 3, '2023-04-10', '2024-04-10',3, 4, 1),
+(10, 10, 4, '2023-01-10', '2024-01-10',3, 4, 1);
 
 
 USE Casino;
@@ -470,4 +554,3 @@ WHERE Training_Exp < GETDATE();
 SELECT SUM(Inv_Quantity) AS Total_Quantity_Left
 FROM Inventory
 WHERE Inventory_Type = 'Clothes' AND Inv_Name LIKE 'Uniforms%';
-
