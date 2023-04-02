@@ -32,7 +32,7 @@ Go
 CREATE TABLE Employee_Type (
     Type_ID INT PRIMARY KEY,
     Type_Title VARCHAR(50) NOT NULL,
-    Type_Description VARCHAR(100) NOT NULL
+    Type_Description VARCHAR(100)
 );
 
 
@@ -40,38 +40,38 @@ CREATE TABLE Department (
     Dept_ID INT PRIMARY KEY,
     Dept_Name VARCHAR(50) NOT NULL,
     Dept_Manager INT,
-    Dept_Ph_Number VARCHAR(20) NOT NULL,
+    Dept_Ph_Number VARCHAR(20)
 );
 
 
 
 CREATE TABLE Section (
     Section_ID INT PRIMARY KEY,
-    Section_Description VARCHAR(100) NOT NULL
+    Section_Description VARCHAR(100)
 );
 
 CREATE TABLE Skill (
     Skill_ID INT PRIMARY KEY,
     Skill_Des VARCHAR(100) NOT NULL,
-	Section_ID INT NOT NULL,
+	Section_ID INT,
 	FOREIGN KEY (Section_ID) REFERENCES Section(Section_ID)
 );
 
 CREATE TABLE Employee (
   EMP_ID INT NOT NULL PRIMARY KEY,
-  EMP_Name VARCHAR(255),
-  EMP_DOB DATE,
-  EMP_Email VARCHAR(255),
-  EMP_Phone_Number VARCHAR(20),
-  EMP_Address VARCHAR(255),
-  EMP_City VARCHAR(255),
-  EMP_Country VARCHAR(255),
-  EMP_Street VARCHAR(255),
-  EMP_House_Number VARCHAR(10),
-  EMP_Postal_Code VARCHAR(10),
+  EMP_Name VARCHAR(255) NOT NULL,
+  EMP_DOB DATE NOT NULL,
+  EMP_Email VARCHAR(255) NOT NULL,
+  EMP_Phone_Number VARCHAR(20) NOT NULL,
+  EMP_Address VARCHAR(255) NOT NULL,
+  EMP_City VARCHAR(255) NOT NULL,
+  EMP_Country VARCHAR(255) NOT NULL, 
+  EMP_Street VARCHAR(255) NOT NULL,
+  EMP_House_Number VARCHAR(10) NOT NULL,
+  EMP_Postal_Code VARCHAR(10) NOT NULL,
   EMP_Gender VARCHAR(10),
-  EMP_Hire_Date DATE,
-  EMP_Pay_Rate DECIMAL(10, 2),
+  EMP_Hire_Date DATE NOT NULL,
+  EMP_Pay_Rate DECIMAL(10, 2) NOT NULL,
   EMP_Dismiss_Date DATE,
   DEPT_ID INT,
   EMP_TYPE_ID INT,
@@ -88,9 +88,9 @@ REFERENCES Employee (EMP_ID);
 
 CREATE TABLE Schedule (
   Schedule_ID INT PRIMARY KEY,
-  Schedule_From DATE,
-  Schedule_To DATE,
-  Made_By INT,
+  Schedule_From DATE NOT NULL,
+  Schedule_To DATE NOT NULL,
+  Made_By INT NOT NULL,
   FOREIGN KEY (Made_By) REFERENCES Employee(EMP_ID)
 );
 
@@ -113,28 +113,28 @@ CREATE TABLE Shift (
 
 CREATE TABLE TimeOff (
   Time_ID INT PRIMARY KEY,
-  EMP_ID INT,
-  TimeOff_Type VARCHAR(50),
-  Time_Approval_Status VARCHAR(50),
-  TimeOff_Start_Date DATE,
-  TimeOff_End_Date DATE
+  EMP_ID INT NOT NULL,
+  TimeOff_Type VARCHAR(50) NOT NULL,
+  Time_Approval_Status VARCHAR(50) NOT NULL,
+  TimeOff_Start_Date DATE NOT NULL,
+  TimeOff_End_Date DATE NOT NULL,
   FOREIGN KEY (EMP_ID) REFERENCES Employee(EMP_ID),
 );
 
 CREATE TABLE Inventory (
   Inv_ID INT PRIMARY KEY,
-  Inv_Name VARCHAR(255),
-  Inv_Price DECIMAL(10, 2),
-  Inv_Quantity INT,
+  Inv_Name VARCHAR(255) NOT NULL,
+  Inv_Price DECIMAL(10, 2) NOT NULL,
+  Inv_Quantity INT NOT NULL,
   Inv_Description VARCHAR(255),
   Inventory_Type VARCHAR(50)
 );
 
 CREATE TABLE Inventory_Shift (
-  Inventory_ID INT,
-  Shift_ID INT,
-  Inventory_Quantity INT,
-  Inventory_Status VARCHAR(50),
+  Inventory_ID INT NOT NULL,
+  Shift_ID INT NOT NULL,
+  Inventory_Quantity INT NOT NULL,
+  Inventory_Status VARCHAR(50) NOT NULL,
   PRIMARY KEY (Shift_ID, Inventory_ID),
   FOREIGN KEY (Inventory_ID) REFERENCES Inventory(Inv_ID),
   FOREIGN KEY (Shift_ID) REFERENCES Shift(Shift_ID)
