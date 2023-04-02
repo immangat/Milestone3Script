@@ -1,5 +1,6 @@
+Use Master;
 
-Use Milestone3;
+use Mileston2Set2AGROUP2TTest1;
 
 INSERT INTO Employee_Type (Type_ID, Type_Title, Type_Description) VALUES
 (1, 'Manager', 'Manages all departments'),
@@ -131,7 +132,7 @@ INSERT INTO Certificates (Cert_ID, Cert_Type, Cert_Date_Issued, Cert_Exp_Date, I
 (3, 'Card Dealing Certification', '2020-03-01', '2025-03-01', 'Casino Association', 4, 3, 3),
 (4, 'Blackjack Strategy Certification', '2020-04-01', '2025-04-01', 'Casino Association', 3, 4, 4);
 
-INSERT INTO Training (Training_ID, EMP_Trained, EMP_Trainer, Training_Date, Traning_Type, Cert_ID) VALUES
+INSERT INTO Training (Training_ID, EMP_Trained, EMP_Trainer, Training_Date, Training_Type, Cert_ID) VALUES
 (1, 1, 2, '2023-01-10', 'On-the-job training', 1),
 (2, 2, 3, '2023-02-10', 'Classroom training', 2),
 (3, 3, 4, '2023-03-10', 'On-the-job training', 3),
